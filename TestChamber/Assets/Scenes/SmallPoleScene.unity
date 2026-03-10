@@ -657,7 +657,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &1182069470
+--- !u!1001 &1223705288
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -667,31 +667,31 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1313782778063936262, guid: 1302a4bbde4ca1441b705ea4b6717268, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.32033712
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 1313782778063936262, guid: 1302a4bbde4ca1441b705ea4b6717268, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.0000001
+      value: 0.832
       objectReference: {fileID: 0}
     - target: {fileID: 1313782778063936262, guid: 1302a4bbde4ca1441b705ea4b6717268, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.4101558
+      value: 1.164
       objectReference: {fileID: 0}
     - target: {fileID: 1313782778063936262, guid: 1302a4bbde4ca1441b705ea4b6717268, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.9914232
+      value: 0.9733993
       objectReference: {fileID: 0}
     - target: {fileID: 1313782778063936262, guid: 1302a4bbde4ca1441b705ea4b6717268, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1313782778063936262, guid: 1302a4bbde4ca1441b705ea4b6717268, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1313782778063936262, guid: 1302a4bbde4ca1441b705ea4b6717268, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.13069104
+      value: 0.22911546
       objectReference: {fileID: 0}
     - target: {fileID: 1313782778063936262, guid: 1302a4bbde4ca1441b705ea4b6717268, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -703,11 +703,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1313782778063936262, guid: 1302a4bbde4ca1441b705ea4b6717268, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 15.019
+      value: 26.49
       objectReference: {fileID: 0}
     - target: {fileID: 7725953408287308991, guid: 1302a4bbde4ca1441b705ea4b6717268, type: 3}
       propertyPath: m_Name
-      value: Thin Destructable Pole Grounded
+      value: Destructable Pole Grounded
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -764,7 +764,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7725953408287308991, guid: 1763a45042c52354c874b884aaf5144f, type: 3}
       propertyPath: m_Name
-      value: Thin Destructable Pole
+      value: Destructable Pole
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -780,5 +780,5 @@ SceneRoots:
   - {fileID: 832575519}
   - {fileID: 776149540}
   - {fileID: 979430744}
-  - {fileID: 1182069470}
   - {fileID: 1623331834}
+  - {fileID: 1223705288}

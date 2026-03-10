@@ -1,9 +1,8 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 
-public class ThinDestructablePole : DestructablePole
+public class DestructableUtilityPole : DestructablePole
 {
-    public GameObject polePrefab;
+    public GameObject DestructablePole;
 
     public override void BreakPole(Vector3 breakPoint)
     {
@@ -28,14 +27,14 @@ public class ThinDestructablePole : DestructablePole
 
         Vector3 OR_Vec; //point on line running through pole that's closest to the hit position
 
-        OR_Vec = OA_Vec + (Vector3.Dot(PA_Vec,AB_Vec) / Vector3.Dot(AB_Vec,AB_Vec)) * AB_Vec;
+        OR_Vec = OA_Vec + (Vector3.Dot(PA_Vec, AB_Vec) / Vector3.Dot(AB_Vec, AB_Vec)) * AB_Vec;
 
 
         topPoleSpawnPos = (OR_Vec - OC_Vec) * 0.5f + OC_Vec;
 
         topPoleLenght = (OR_Vec - OC_Vec).magnitude * 0.5f;
 
-        topPole = Instantiate(polePrefab, topPoleSpawnPos, transform.rotation);
+        topPole = Instantiate(DestructablePole, topPoleSpawnPos, transform.rotation);
 
         topPole.transform.localScale = new Vector3(transform.localScale.x,
                                                       topPoleLenght,
@@ -47,8 +46,8 @@ public class ThinDestructablePole : DestructablePole
 
         bottomPoleLenght = (OR_Vec - OA_Vec).magnitude * 0.5f;
 
-    
-        bottomPole = Instantiate(polePrefab, bottomPoleSpawnPos, transform.rotation);
+
+        bottomPole = Instantiate(gameObject, bottomPoleSpawnPos, transform.rotation);
 
         bottomPole.transform.localScale = new Vector3(transform.localScale.x,
                                                           bottomPoleLenght,
@@ -57,7 +56,4 @@ public class ThinDestructablePole : DestructablePole
 
         Destroy(gameObject);
     }
-
-
-
 }

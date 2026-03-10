@@ -1,17 +1,8 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class ThinDestructablePoleGrounded : DestructablePole
+public class DestructablePoleImpl : DestructablePole
 {
-
-    public GameObject polePrefab;
-    public GameObject polePrefabGrounded;
-
-
-    private void Start()
-    {
-        if (polePrefab == gameObject) Debug.LogError("polePrefab cannot be of variant grounded, and has to be of variant not grounded");
-    }
 
     public override void BreakPole(Vector3 breakPoint)
     {
@@ -43,7 +34,7 @@ public class ThinDestructablePoleGrounded : DestructablePole
 
         topPoleLenght = (OR_Vec - OC_Vec).magnitude * 0.5f;
 
-        topPole = Instantiate(polePrefab, topPoleSpawnPos, transform.rotation);
+        topPole = Instantiate(gameObject, topPoleSpawnPos, transform.rotation);
 
         topPole.transform.localScale = new Vector3(transform.localScale.x,
                                                       topPoleLenght,
@@ -56,7 +47,7 @@ public class ThinDestructablePoleGrounded : DestructablePole
         bottomPoleLenght = (OR_Vec - OA_Vec).magnitude * 0.5f;
 
     
-        bottomPole = Instantiate(polePrefabGrounded, bottomPoleSpawnPos, transform.rotation);
+        bottomPole = Instantiate(gameObject, bottomPoleSpawnPos, transform.rotation);
 
         bottomPole.transform.localScale = new Vector3(transform.localScale.x,
                                                           bottomPoleLenght,
