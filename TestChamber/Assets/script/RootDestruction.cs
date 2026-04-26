@@ -15,8 +15,13 @@ public class RootDestruction : MonoBehaviour
     HashSet<Transform> visited;
     List<List<Transform>> components;
 
+    List<List<Transform>> newComponents;
+
     void Start()
     {
+        //!!! THIS METHOD HAS PROBLEMS CREATING CONNECTIONS BETWEENS NODES WHERE IT SHOULDNT
+        // THIS IS DUE TO THE OVERLAPBOX BEING TO BIG !!!
+
         //runs through every node and looks for connections
         foreach (Transform child in transform)
         {
@@ -42,51 +47,59 @@ public class RootDestruction : MonoBehaviour
             {
                 if (col.transform == child || col.transform == null) continue;
 
-                connectedNodes.Add(col.transform);
+                //only connect destructable transforms
+                if (col.CompareTag("Destructable"))
+                    connectedNodes.Add(col.transform);
             }
 
             //add the current node and its connected nodes
             nodeTree[child] = connectedNodes;
         }
 
+        //Finds components in the node tree 
+        newComponents = FindComponents(nodeTree);
 
-        
+        //doesnt reparent if there are no components
+        if (newComponents.Count == 1) return;
+
+        //method that reparents components
+        TransformUtils.CreateParentsAndReparent(newComponents);
+
+        Destroy(gameObject);
+
+
 
         //posts nodes and connected nodes in the terminal 
-        Debug.Log("| BLOCK | Connected Brothers |");
-        foreach (KeyValuePair<Transform, List<Transform>> pair in nodeTree)
-        {
-            string block = pair.Key.name;
-            string brothas = "";
+        //Debug.Log("| BLOCK | Connected Brothers |");
+        //foreach (KeyValuePair<Transform, List<Transform>> pair in nodeTree)
+        //{
+        //    string block = pair.Key.name;
+        //    string brothas = "";
 
-            foreach (Transform brotha in pair.Value)
-            {
-                brothas = brothas + " " + brotha.name;
-            }
+        //    foreach (Transform brotha in pair.Value)
+        //    {
+        //        brothas = brothas + " " + brotha.name;
+        //    }
 
-            Debug.Log("|" + block + "|" + brothas + "|");
+        //    Debug.Log("|" + block + "|" + brothas + "|");
 
-        }
-
-        var test = FindComponents(nodeTree);
-
-        foreach (List<Transform> list in test)
-        {
-
-            string elements = "";
-            foreach (Transform element in list)
-            {
-                elements = elements + " " + element;
-            }
-
-            Debug.Log(elements);
-        }
+        //}
 
 
 
+        //print the nodes of each component.
+        //foreach (List<Transform> list in newComponents)
+        //{
 
+        //    string elements = "";
+        //    foreach (Transform element in list)
+        //    {
+        //        elements = elements + " " + element;
+        //    }
 
- 
+        //    Debug.Log(elements);
+        //}
+
     }
 
     //Finds the connected components(clusters of connected nodes)
@@ -127,7 +140,66 @@ public class RootDestruction : MonoBehaviour
         }
     }
 
+    public void EvaluateStructure()
+    {
+        RemoveNulls(nodeTree);
 
+        //Finds components in the node tree 
+        newComponents = FindComponents(nodeTree);
+
+        Debug.Log("| BLOCK | Connected Brothers |");
+        foreach (KeyValuePair<Transform, List<Transform>> pair in nodeTree)
+        {
+            string block = pair.Key.name;
+            string brothas = "";
+
+            foreach (Transform brotha in pair.Value)
+            {
+                brothas = brothas + " " + brotha.name;
+            }
+
+            Debug.Log("|" + block + "|" + brothas + "|");
+
+        }
+
+        //doesnt reparent if there are no components
+        if (newComponents.Count == 1) return;
+
+        //method that reparents components
+        TransformUtils.CreateParentsAndReparent(newComponents);
+
+        Destroy(gameObject);
+    }
+
+    private void RemoveNulls(Dictionary<Transform, List<Transform>> dict)
+    {
+        // First pass: clean list values
+        foreach (var kvp in dict)
+        {
+            List<Transform> list = kvp.Value;
+
+            if (list == null) continue;
+
+            list.RemoveAll(item => item == null);
+        }
+
+        // Second pass: remove null keys
+        // (must do separately to avoid modifying dictionary during iteration)
+        List<Transform> nullKeys = new List<Transform>();
+
+        foreach (var kvp in dict)
+        {
+            if (kvp.Key == null)
+            {
+                nullKeys.Add(kvp.Key);
+            }
+        }
+
+        foreach (var key in nullKeys)
+        {
+            dict.Remove(key);
+        }
+    }
 
 
 }
