@@ -14,4 +14,9 @@ public class destructableClicker : clicker
         }
 
     }
+
+    public override void ClickFunctionVoid(Vector3 position)
+    {
+        throw new System.NotImplementedException();
+    }
 }

@@ -17,8 +17,17 @@ public class RootDestruction : MonoBehaviour
 
     List<List<Transform>> newComponents;
 
+
+    Rigidbody rb;
+
     void Start()
     {
+        //get the rigidbody component
+        rb = GetComponent<Rigidbody>();
+
+        //set the mass of the rigidbody component using number of child nodes
+        rb.mass = transform.childCount;
+
         //!!! THIS METHOD HAS PROBLEMS CREATING CONNECTIONS BETWEENS NODES WHERE IT SHOULDNT
         // THIS IS DUE TO THE OVERLAPBOX BEING TO BIG !!!
 
@@ -26,7 +35,7 @@ public class RootDestruction : MonoBehaviour
         foreach (Transform child in transform)
         {
             if (!child.gameObject.activeSelf) continue;
-            
+
             //temporary list for current elements connected nodes
             List<Transform> connectedNodes = new List<Transform>();
 
@@ -48,16 +57,20 @@ public class RootDestruction : MonoBehaviour
                 if (col.transform == child || col.transform == null) continue;
 
                 //only connect destructable transforms
-                if (col.CompareTag("Destructable"))
+                if (col.transform.root == transform)
                     connectedNodes.Add(col.transform);
             }
 
             //add the current node and its connected nodes
             nodeTree[child] = connectedNodes;
         }
+        
+
 
         //Finds components in the node tree 
         newComponents = FindComponents(nodeTree);
+
+
 
         //doesnt reparent if there are no components
         if (newComponents.Count == 1) return;
@@ -69,7 +82,7 @@ public class RootDestruction : MonoBehaviour
 
 
 
-        //posts nodes and connected nodes in the terminal 
+        ////posts nodes and connected nodes in the terminal 
         //Debug.Log("| BLOCK | Connected Brothers |");
         //foreach (KeyValuePair<Transform, List<Transform>> pair in nodeTree)
         //{
@@ -84,6 +97,8 @@ public class RootDestruction : MonoBehaviour
         //    Debug.Log("|" + block + "|" + brothas + "|");
 
         //}
+
+
 
 
 
@@ -140,27 +155,12 @@ public class RootDestruction : MonoBehaviour
         }
     }
 
-    public void EvaluateStructure()
+    public void EvaluateStructure(List<Transform> nodesToDestroy)
     {
-        RemoveNulls(nodeTree);
+        RemoveNulls(nodeTree, nodesToDestroy);
 
         //Finds components in the node tree 
         newComponents = FindComponents(nodeTree);
-
-        Debug.Log("| BLOCK | Connected Brothers |");
-        foreach (KeyValuePair<Transform, List<Transform>> pair in nodeTree)
-        {
-            string block = pair.Key.name;
-            string brothas = "";
-
-            foreach (Transform brotha in pair.Value)
-            {
-                brothas = brothas + " " + brotha.name;
-            }
-
-            Debug.Log("|" + block + "|" + brothas + "|");
-
-        }
 
         //doesnt reparent if there are no components
         if (newComponents.Count == 1) return;
@@ -171,16 +171,16 @@ public class RootDestruction : MonoBehaviour
         Destroy(gameObject);
     }
 
-    private void RemoveNulls(Dictionary<Transform, List<Transform>> dict)
+    private void RemoveNulls(Dictionary<Transform, List<Transform>> dict, List<Transform> nodesToDestroy)
     {
         // First pass: clean list values
         foreach (var kvp in dict)
         {
             List<Transform> list = kvp.Value;
 
-            if (list == null) continue;
+            list.RemoveAll(item => nodesToDestroy.Contains(item));
 
-            list.RemoveAll(item => item == null);
+
         }
 
         // Second pass: remove null keys
@@ -189,7 +189,7 @@ public class RootDestruction : MonoBehaviour
 
         foreach (var kvp in dict)
         {
-            if (kvp.Key == null)
+            if (nodesToDestroy.Contains(kvp.Key))
             {
                 nullKeys.Add(kvp.Key);
             }
@@ -198,6 +198,12 @@ public class RootDestruction : MonoBehaviour
         foreach (var key in nullKeys)
         {
             dict.Remove(key);
+        }
+
+
+        foreach(Transform node in nodesToDestroy)
+        {
+            Destroy(node.gameObject);
         }
     }
 

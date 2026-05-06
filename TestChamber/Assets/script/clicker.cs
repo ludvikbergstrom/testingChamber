@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 public abstract class clicker : MonoBehaviour
 {
 
+    float voidDistance = 1000f;
 
     // Update is called once per frame
     void Update()
@@ -17,11 +18,20 @@ public abstract class clicker : MonoBehaviour
             {
                 ClickFunction(hit);
             }
+
+            else
+            {
+                // fallback: point in the void
+                Vector3 voidPoint = ray.GetPoint(voidDistance);
+                ClickFunctionVoid(voidPoint);
+            }
         }
     }
 
 
     public abstract void ClickFunction(RaycastHit hit);
+
+    public abstract void ClickFunctionVoid(Vector3 position);
 
 
 }
