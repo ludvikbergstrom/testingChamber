@@ -17,10 +17,4 @@ public class testScriptFixedJoint : MonoBehaviour
         rb.AddForce(Vector3.forward * appliedForce);
         rb.AddTorque(Vector3.forward * appliedTorque);
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

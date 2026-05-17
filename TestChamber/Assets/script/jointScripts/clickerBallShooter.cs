@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class clickerBallShooter : clicker 
 {
-    GameObject ball;
+    public GameObject ball;
 
     float radius = 0.2f;
     public float shootForce = 100f;
@@ -10,6 +10,11 @@ public class clickerBallShooter : clicker
 
     void Start()
     {
+        //if a ball prefab is assigned in the inspector we skip the ball making process
+        if (ball != null) return;
+
+        //if no prefab is given we create a simple ball
+
         ball = GameObject.CreatePrimitive(PrimitiveType.Sphere);
 
         
