@@ -42,12 +42,9 @@ public class RagdollController : MonoBehaviour
         animator.enabled = false;
 
         //set every Rigidbody to dynamic so they simulate physics for each bone
-        foreach (Transform transform in rootRigidbody.transform)
+        foreach (Rigidbody rb in rootRigidbody.GetComponentsInChildren<Rigidbody>())
         {
-            if (transform.TryGetComponent<Rigidbody>(out Rigidbody rb))
-            {
-                rb.isKinematic = false;
-            }
+            rb.isKinematic = false;
         }
     }
 
@@ -58,12 +55,9 @@ public class RagdollController : MonoBehaviour
         animator.enabled = true;
 
         //set every Rigidbody to kinematic so that they dont interfear with the animation
-        foreach (Transform transform in rootRigidbody.transform)
+        foreach (Rigidbody rb in rootRigidbody.GetComponentsInChildren<Rigidbody>())
         {
-            if (transform.TryGetComponent<Rigidbody>(out Rigidbody rb))
-            {
-                rb.isKinematic = true;
-            }
+            rb.isKinematic = true;
         }
     }
 
