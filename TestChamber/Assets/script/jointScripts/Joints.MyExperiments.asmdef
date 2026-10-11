@@ -1,0 +1,16 @@
+{
+    "name": "Joints.MyExperiments",
+    "rootNamespace": "Joints.MyExperiments",
+    "references": [
+        "GUID:41b01d3964f844d8b43923c18b3a9a6f"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

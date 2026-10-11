@@ -1,0 +1,16 @@
+{
+    "name": "Destruction",
+    "rootNamespace": "Destruction",
+    "references": [
+        "Clicker"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
